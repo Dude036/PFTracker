@@ -24,10 +24,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.navigation.ui.*
+import androidx.room.Room
 import com.dude36.pftracker.Data.toJSON
 import com.dude36.pftracker.ui.entries.EntriesFragment
 import com.dude36.pftracker.ui.graphs.GraphsFragment
 import com.dude36.pftracker.ui.home.HomeFragment
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.Exception
@@ -48,6 +51,14 @@ class MainActivity : AppCompatActivity() {
 
         // Uses Data object for all data needs
         myData.start(this)
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "PeakFlow").build()
+        val dao = db.userDao()
+        GlobalScope.async {
+            val all_entries = dao.getAll()
+            println("This is all the entries")
+            println(all_entries)
+            println()
+        }
 
         // Floating Action Button to add Entries
         val fab: FloatingActionButton = findViewById(R.id.fab)

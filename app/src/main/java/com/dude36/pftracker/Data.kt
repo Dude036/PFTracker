@@ -1,6 +1,7 @@
 package com.dude36.pftracker
 
 import android.content.Context
+import androidx.room.*
 import java.io.File
 import java.util.*
 import org.json.*
@@ -285,3 +286,30 @@ object Data {
     }
 }
 
+
+@Entity(indices = [Index(value = ["time", "rowid"], unique=true)])
+data class PeakFlow (
+    @PrimaryKey @ColumnInfo(name = "rowid")val id: Int,
+    @ColumnInfo(name = "time") val time: String?,
+    @ColumnInfo(name = "treated") val treatment: Boolean?,
+    @ColumnInfo(name = "entry1") val entry1: Int?,
+    @ColumnInfo(name = "entry2") val entry2: Int?,
+    @ColumnInfo(name = "entry3") val entry3: Int?
+)
+
+@Dao
+interface PFDao {
+    @Insert
+    fun insert(vararg peakFlow: PeakFlow)
+
+    @Delete
+    fun delete(peakFlow: PeakFlow)
+
+    @Query("SELECT * from PeakFlow")
+    fun getAll(): List<PeakFlow>
+}
+
+@Database(entities = arrayOf(PeakFlow::class), version = 1)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): PFDao
+}
