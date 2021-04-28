@@ -54,7 +54,7 @@ class Entry(measure: List<Short> = listOf(), date : String = "",  treat : Boolea
     }
 
     fun average() : Short {
-        return entry.average().toShort()
+        return entry.average().toInt().toShort()
     }
 
     fun treat() : String {

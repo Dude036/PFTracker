@@ -22,7 +22,7 @@ class AddEntry : AppCompatActivity() {
         }
 
         val submit = findViewById<Button>(R.id.entry_submit)
-        submit.setOnClickListener { view: View? ->
+        submit.setOnClickListener { _: View? ->
             // Validate input is there
             if (findViewById<EditText>(R.id.time_hour).text.isEmpty()) {
                 Toast.makeText(this, "Hour Missing", Toast.LENGTH_LONG).show()
@@ -96,7 +96,7 @@ class AddEntry : AppCompatActivity() {
 
         // Current Time function
         val current_time = findViewById<Button>(R.id.current_time)
-        current_time.setOnClickListener {view: View? ->
+        current_time.setOnClickListener {_: View? ->
             val now = Calendar.getInstance()
             findViewById<EditText>(R.id.time_hour).setText(now.get(Calendar.HOUR).toString())
             findViewById<EditText>(R.id.time_min).setText(now.get(Calendar.MINUTE).toString())
